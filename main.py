@@ -9,6 +9,11 @@ pg.display.set_caption("Pong")
 #definir tasa de refresco en nuestro bucle de fotogramas, fps=fotograma por segundo
 tasa_refresco = pg.time.Clock()
 
+#agregar marcadores
+#asignacion de fuente y tamaño de letra
+marcador1_font = pg.font.SysFont("verdana", 30)
+marcador2_font = pg.font.SysFont("verdana", 30)
+
 #Creamos un objeto de la clase Pelota o instanciamos la clase Pelota
 pelota = Pelota(400,300,(107, 7, 157), 15)
 
@@ -29,15 +34,6 @@ while game_over:
         if eventos.type == pg.QUIT:
             game_over = False
 
-    '''
-    estado_teclado = pg.key.get_pressed()
-    #print("estado teclado: ", estado_teclado[pg.K_UP])
-    if estado_teclado[pg.K_UP] == True:
-        raqueta1.posY -= 1
-    if estado_teclado[pg.K_DOWN] == True:
-        raqueta1.posY += 1
-    '''
-
     pantalla_principal.fill( (7, 157, 107) )
 
     pg.draw.line(pantalla_principal, (255,255,255), (400,0), (400,600), 10)
@@ -49,5 +45,15 @@ while game_over:
     raqueta1.mover(pg.K_w, pg.K_s)
     raqueta2.mover(pg.K_UP, pg.K_DOWN)
     pelota.mover(800,600)
+
+    print("Jugador derecho: ", pelota.contadorIzquierdo)
+    print("Jugador izquierdo: ", pelota.contadorDerecho)
+
+    #asignacion de color y texto
+    marcador1 = marcador1_font.render(str(pelota.contadorDerecho), True, (255,255,255))
+    marcador2 = marcador2_font.render(str(pelota.contadorIzquierdo), True, (255,255,255))
+
+    pantalla_principal.blit(marcador1, (350, 50))
+    pantalla_principal.blit(marcador2, (450, 50))
 
     pg.display.flip()
