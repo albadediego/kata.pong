@@ -6,6 +6,9 @@ pg.init()
 pantalla_principal = pg.display.set_mode( (800,600) )
 pg.display.set_caption("Pong")
 
+#definir tasa de refresco en nuestro bucle de fotogramas, fps=fotograma por segundo
+tasa_refresco = pg.time.Clock()
+
 #Creamos un objeto de la clase Pelota o instanciamos la clase Pelota
 pelota = Pelota(400,300,(107, 7, 157), 15)
 
@@ -18,10 +21,21 @@ raqueta2 = Raqueta(790, 300)
 game_over = True
 
 while game_over:
+    #obtener la tasa de refresco en milisegundos
+    valor_tasa = tasa_refresco.tick(300) #variable para controlar la velocidad entre fotogramas
+    print(valor_tasa)
     for eventos in pg.event.get():
         print(eventos)
         if eventos.type == pg.QUIT:
             game_over = False
+
+
+    estado_teclado = pg.key.get_pressed()
+    #print("estado teclado: ", estado_teclado[pg.K_UP])
+    if estado_teclado[pg.K_UP] == True:
+        raqueta1.posY -= 1
+    if estado_teclado[pg.K_DOWN] == True:
+        raqueta1.posY += 1
 
     pantalla_principal.fill( (7, 157, 107) )
 
