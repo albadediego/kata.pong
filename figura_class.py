@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Raqueta:
-    def __init__(self, posX, posY, color=(255,255,255), w=5, h=50):
+    def __init__(self, posX, posY, color=(255,255,255), w=20, h=120):
         self.posX = posX
         self.posY = posY
         self.color = color
@@ -9,7 +9,7 @@ class Raqueta:
         self.h = h
 
     def dibujar(self, surface):
-        pg.draw.rect(surface, self.color,(self.posX, self.posY, self.w, self.h))
+        pg.draw.rect(surface, self.color,(self.posX-(self.w//2), self.posY-(self.h//2), self.w, self.h))
 
 class Pelota:
     def __init__(self, posX, posY, color=(255,255,255), radio=5):
