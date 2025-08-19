@@ -18,6 +18,19 @@ class Raqueta:
         if estado_teclado[teclado_abajo] == True and self.posY <= 600-(self.h//2):
             self.posY += 1
 
+    @property
+    def derecha(self):
+        return self.posX+(self.w//2) 
+    @property
+    def izquierda(self):
+        return self.posX-(self.w//2)    
+    @property
+    def arriba(self):
+        return self.posY-(self.h//2) 
+    @property
+    def abajo(self):
+        return self.posY+(self.h//2)
+
 class Pelota:
     def __init__(self, posX, posY, color=(255,255,255), radio=5, vx=1, vy=1):
         self.posX = posX
@@ -49,6 +62,30 @@ class Pelota:
         if self.posY >= yMax-(self.radio) or self.posY <= 0+(self.radio):
             self.vy *= -1
 
+    def comprobar_choque(self, r1, r2):
+        #logica de choque
+        #raqueta izquierda
+        if self.derecha >= r1.izquierda and\
+            self.izquierda <= r1.derecha and\
+            self.abajo >= r1.arriba and\
+            self.arriba <= r1.abajo:
+            self.vx *= -1
+
+        #raqueta derecha
+        if self.derecha >= r2.izquierda and\
+            self.izquierda <= r2.derecha and\
+            self.abajo >= r2.arriba and\
+            self.arriba <= r2.abajo:
+            self.vx *= -1
+
+    def comprobarChoque(self, *raquetas):
+        for r in raquetas:
+            if self.derecha >= r.izquierda and\
+                self.izquierda <= r.derecha and\
+                self.abajo >= r.arriba and\
+                self.arriba <= r.abajo:
+                self.vx *= -1
+
     def mostrar_marcador(self, pantalla):
         fuente = pg.font.Font(None, 30)
         jugador1 = fuente.render("Jugador 1", True, (255,255,255))
@@ -61,4 +98,15 @@ class Pelota:
         pantalla.blit(jugador1, (250, 20))
         pantalla.blit(jugador2, (420, 20))
 
-
+    @property
+    def derecha(self):
+        return self.posX + self.radio
+    @property
+    def izquierda(self):
+        return self.posX - self.radio
+    @property
+    def arriba(self):
+        return self.posY - self.radio
+    @property
+    def abajo(self):
+        return self.posY + self.radio

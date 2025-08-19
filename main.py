@@ -26,7 +26,7 @@ pelota = Pelota(400,300,(107, 7, 157), 15)
 raqueta1 = Raqueta(10,300)
 
 #Raqueta derecha
-raqueta2 = Raqueta(790, 300)
+raqueta2 = Raqueta(790,300)
 
 game_over = True
 
@@ -50,6 +50,8 @@ while game_over:
     raqueta1.mover(pg.K_w, pg.K_s)
     raqueta2.mover(pg.K_UP, pg.K_DOWN)
     pelota.mover(800,600)
+    pelota.comprobarChoque(raqueta1,raqueta2)
+
     pelota.mostrar_marcador(pantalla_principal)
-    
+
     pg.display.flip()
