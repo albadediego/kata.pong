@@ -48,3 +48,17 @@ class Pelota:
 
         if self.posY >= yMax-(self.radio) or self.posY <= 0+(self.radio):
             self.vy *= -1
+
+    def mostrar_marcador(self, pantalla):
+        fuente = pg.font.Font(None, 30)
+        jugador1 = fuente.render("Jugador 1", True, (255,255,255))
+        jugador2 = fuente.render("Jugador 2", True, (255,255,255))
+        marcador1 = fuente.render(str(self.contadorDerecho), True, (255,255,255))
+        marcador2 = fuente.render(str(self.contadorIzquierdo), True, (255,255,255))
+
+        pantalla.blit(marcador1, (300, 50))
+        pantalla.blit(marcador2, (450, 50))
+        pantalla.blit(jugador1, (250, 20))
+        pantalla.blit(jugador2, (420, 20))
+
+
