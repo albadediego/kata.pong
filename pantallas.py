@@ -13,19 +13,30 @@ class Partida:
         self.raqueta1 = Raqueta(10, ALTO//2)
         self.raqueta2 = Raqueta(ANCHO-10, ALTO//2)
         self.fuente = pg.font.Font(None, 30)
+        self.fuente_tiempo = pg.font.Font(None, 45)
         self.contadorDerecho = 0
         self.contadorIzquierdo = 0
         self.quienMarco = ""
+        self.temporizador = TIEMPO_JUEGO
+        self.game_over = True
 
     def bucle_fotograma(self):
-        game_over = True
-        while game_over:
+        while self.game_over:
             self.valor_tasa = self.tasa_refresco.tick(TS)
+           
             for eventos in pg.event.get():
                 if eventos.type == pg.QUIT:
-                    game_over = False
+                    self.game_over = False
+                    
+            self.finalizacion_juego()
 
-            self.pantalla_principal.fill(COLOR_PISTA)
+            #self.pantalla_principal.fill(COLOR_PISTA)
+            if self.temporizador <= 5000:
+                self.pantalla_principal.fill(PISTA_ROJA)
+            elif self.temporizador <= 10000:
+                self.pantalla_principal.fill(PISTA_NARANJA)
+            else:
+                self.pantalla_principal.fill(COLOR_PISTA)
             self.mostar_linea_central()
 
             self.pelota.dibujar(self.pantalla_principal)
@@ -38,6 +49,7 @@ class Partida:
 
             self.pelota.comprobarChoque(self.raqueta1, self.raqueta2)
             self.mostrar_marcador()
+
 
             pg.display.flip()
 
@@ -58,12 +70,29 @@ class Partida:
         jugador2 = self.fuente.render("Jugador 2", True, COLOR_AZUL)
         marcador1 = self.fuente.render(str(self.contadorDerecho), True, COLOR_BLANCO)
         marcador2 = self.fuente.render(str(self.contadorIzquierdo), True, COLOR_BLANCO)
+        tiempo_juego = self.fuente_tiempo.render(str(int(self.temporizador/1000)), True, COLOR_ROJO)
 
         self.pantalla_principal.blit(marcador1, ((ANCHO//2)-100, 50))
         self.pantalla_principal.blit(marcador2, ((ANCHO//2)+50, 50))
         self.pantalla_principal.blit(jugador1, ((ANCHO//2)-150, 20))
         self.pantalla_principal.blit(jugador2, ((ANCHO//2)+20, 20))
+        self.pantalla_principal.blit(tiempo_juego, ((ANCHO//2), 20))
 
+    def finalizacion_juego(self):
+        #Finalizacion del juego por puntos
+        if self.contadorDerecho == 7:
+            print("El ganador es el Jugador 1")
+            self.game_over = False
+        if self.contadorIzquierdo == 7:
+            print("El ganador es el Jugador 2")
+            self.game_over = False
+
+        #Finalizacion del juego por tiempo
+        self.temporizador = self.temporizador - self.valor_tasa
+        if self.temporizador <= 0:
+            print("Fin del juego")
+            self.game_over = False
+            
 
 class Menu:
     pg.init()
