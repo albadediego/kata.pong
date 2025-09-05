@@ -40,8 +40,6 @@ class Pelota:
         self.radio = radio
         self.vx = vx
         self.vy = vy
-        self.contadorDerecho = 0
-        self.contadorIzquierdo = 0
 
     def dibujar(self, surface):
         pg.draw.circle(surface, self.color,(self.posX, self.posY), self.radio)
@@ -52,13 +50,15 @@ class Pelota:
 
         if self.posX >= xMax+(5*self.radio) or self.posX <= 0-(5*self.radio):
             if self.posX >= xMax+(5*self.radio):
-                self.contadorDerecho += 1
+                self.posX = ANCHO//2
+                self.posY = ALTO//2
+                self.vx *= -1
+                return "Derecha"
             elif self.posX <= 0-(5*self.radio):
-                 self.contadorIzquierdo += 1
-
-            self.posX = ANCHO//2
-            self.posY = ALTO//2
-            self.vx *= -1
+                self.posX = ANCHO//2
+                self.posY = ALTO//2
+                self.vx *= -1
+                return "Izquierda"
 
         if self.posY >= yMax-(self.radio) or self.posY <= 0+(self.radio):
             self.vy *= -1
@@ -71,17 +71,6 @@ class Pelota:
                 self.arriba <= r.abajo:
                 self.vx *= -1
 
-    def mostrar_marcador(self, pantalla):
-        fuente = pg.font.Font(None, 30)
-        jugador1 = fuente.render("Jugador 1", True, COLOR_BLANCO)
-        jugador2 = fuente.render("Jugador 2", True, COLOR_BLANCO)
-        marcador1 = fuente.render(str(self.contadorDerecho), True, COLOR_BLANCO)
-        marcador2 = fuente.render(str(self.contadorIzquierdo), True, COLOR_BLANCO)
-
-        pantalla.blit(marcador1, ((ANCHO//2)-100, 50))
-        pantalla.blit(marcador2, ((ANCHO//2)+50, 50))
-        pantalla.blit(jugador1, ((ANCHO//2)-150, 20))
-        pantalla.blit(jugador2, ((ANCHO//2)+20, 20))
 
     @property
     def derecha(self):
