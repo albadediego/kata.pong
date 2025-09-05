@@ -21,7 +21,13 @@ class Partida:
                 if eventos.type == pg.QUIT:
                     game_over = False
 
-            self.pantalla_principal.fill(COLOR_PISTA)
+            #self.pantalla_principal.fill(COLOR_PISTA)
+            if self.temporizador <= 5000:
+                self.pantalla_principal.fill(PISTA_ROJO)
+            elif self.temporizador <= 10000:
+                self.pantalla_principal.fill(PISTA_NARANJA)
+            else:
+                self.pantalla_principal.fill(COLOR_PISTA)
 
             #pg.draw.line(self.pantalla_principal, COLOR_BLANCO, (ANCHO//2, 0), (ANCHO//2, ALTO), 10)
             for i in range(0,ALTO, ALTO//41):
@@ -41,3 +47,47 @@ class Partida:
             pg.display.flip()
 
         pg.QUIT()
+
+    def finalizacion_juego(self):
+        if self.contadorDerecho == 7:
+            print("El ganador es el Jugador 1")
+            self.game_over = False
+
+
+class Menu:
+    pg.init()
+    def __init__(self):
+        self.pantalla_principal = pg.display.set_mode((ANCHO, ALTO))
+        pg.display.set_caption("Menu")
+        self.tasa_refresco = pg.time.Clock()
+
+
+    def bucle_pantalla(self):
+        game_over = False
+        while not game_over:
+            for evento in pg.event.get():
+                if evento.type == pg.QUIT:
+                    game_over = True
+
+class Resultado:
+    def __init__(self, resultado):
+        pg.init()
+        self.pantalla_principal = pg.display.set_mode( (ANCHO,ALTO) )
+        pg.display.set_caption("Resultado")
+        self.tasa_refresco = pg.time.Clock()
+        self.fuenteResultado = pg.font.Font(FUENTE1, 20)
+        self.resultado = resultado
+
+    def bucle_pantalla(self):
+        game_over = False
+        while not game_over:
+            for evento in pg.event.get():
+                if evento.type == pg.QUIT:
+                    game_over = True 
+
+            self.pantalla_principal.fill(COLOR_BLANCO)
+            texto_resultado = self.fuenteResultado.render(str(self.resultado), True, COLOR_ROJO)
+            self.pantalla_principal.blit(texto_resultado,(200, ALTO//2))           
+            pg.display.flip()
+
+        pg.quit() 

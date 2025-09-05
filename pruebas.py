@@ -20,3 +20,12 @@ def datosPersonales(*args):
         print(datos)
 
 datosPersonales("Jose", "Martinez", 25, True, [1,2,3])
+
+def nombres(apellido):
+    return "Jose Alfredo "+ apellido
+
+def apellidos(ape):
+    return ape
+
+nombres_apelidos = nombres(apellidos("Perez Ruiz"))
+print(nombres_apelidos)
