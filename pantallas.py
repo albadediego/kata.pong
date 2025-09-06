@@ -19,6 +19,8 @@ class Partida:
         self.quienMarco = ""
         self.temporizador = TIEMPO_JUEGO
         self.game_over = True
+        self.contadorFotograma = 0
+        self.colorFondo = COLOR_PISTA
 
     def bucle_fotograma(self):
         while self.game_over:
@@ -30,13 +32,9 @@ class Partida:
                     
             self.finalizacion_juego()
 
-            #self.pantalla_principal.fill(COLOR_PISTA)
-            if self.temporizador <= 5000:
-                self.pantalla_principal.fill(PISTA_ROJA)
-            elif self.temporizador <= 10000:
-                self.pantalla_principal.fill(PISTA_NARANJA)
-            else:
-                self.pantalla_principal.fill(COLOR_PISTA)
+            self.colorFondo = self.fijar_fondo()
+            self.pantalla_principal.fill(self.colorFondo)
+
             self.mostar_linea_central()
 
             self.pelota.dibujar(self.pantalla_principal)
@@ -76,7 +74,7 @@ class Partida:
         self.pantalla_principal.blit(marcador2, ((ANCHO//2)+50, 50))
         self.pantalla_principal.blit(jugador1, ((ANCHO//2)-150, 20))
         self.pantalla_principal.blit(jugador2, ((ANCHO//2)+20, 20))
-        self.pantalla_principal.blit(tiempo_juego, ((ANCHO//2), 20))
+        self.pantalla_principal.blit(tiempo_juego, ((ANCHO//2)-20, 10))
 
     def finalizacion_juego(self):
         #Finalizacion del juego por puntos
@@ -93,6 +91,38 @@ class Partida:
             print("Fin del juego")
             self.game_over = False
             
+    def fijar_fondo(self):
+        self.contadorFotograma += 1
+        if self.temporizador > 10000:
+            self.contadorFotograma = 0
+        elif self.temporizador > 5000:
+            if self.contadorFotograma == 80:
+                if self.colorFondo == COLOR_PISTA:
+                    self.colorFondo = PISTA_NARANJA
+                else:
+                    self.colorFondo = COLOR_PISTA
+                self.contadorFotograma = 0
+        else: 
+            if self.contadorFotograma == 80:
+                if self.colorFondo == COLOR_PISTA or self.colorFondo == PISTA_NARANJA:
+                    self.colorFondo = PISTA_ROJA
+                else:
+                    self.colorFondo = COLOR_PISTA
+                self.contadorFotograma = 0
+
+        return self.colorFondo
+
+        '''
+        if self.temporizador <= 5000:
+            print("roja " + str(self.contadorFotograma))
+            #if contadorFotograma == 
+            self.pantalla_principal.fill(PISTA_ROJA)
+        elif self.temporizador <= 10000:
+            print("naranja " + str(self.contadorFotograma))
+            self.pantalla_principal.fill(PISTA_NARANJA)
+        else:
+            self.pantalla_principal.fill(COLOR_PISTA)
+        '''
 
 class Menu:
     pg.init()
