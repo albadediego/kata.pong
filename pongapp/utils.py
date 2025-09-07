@@ -9,3 +9,5 @@ TS = 360
 TIEMPO_JUEGO = 12000
 PISTA_NARANJA = (227, 83, 11)
 PISTA_ROJA = (237, 121, 123)
+FUENTE1 = "pongapp/fonts/PressStart2P.ttf"
+FUENTE2 = "pongapp/fonts/RussoOne.ttf"

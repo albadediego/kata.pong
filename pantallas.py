@@ -12,8 +12,8 @@ class Partida:
         self.pelota = Pelota(ANCHO//2, ALTO//2, COLOR_PELOTA)
         self.raqueta1 = Raqueta(10, ALTO//2)
         self.raqueta2 = Raqueta(ANCHO-10, ALTO//2)
-        self.fuente = pg.font.Font(None, 30)
-        self.fuente_tiempo = pg.font.Font(None, 45)
+        self.fuente = pg.font.Font(FUENTE1, 15)
+        self.fuente_tiempo = pg.font.Font(FUENTE2, 24)
         self.contadorDerecho = 0
         self.contadorIzquierdo = 0
         self.quienMarco = ""
@@ -130,6 +130,7 @@ class Menu:
         self.pantalla_principal = pg.display.set_mode((ANCHO, ALTO))
         pg.display.set_caption("Menu")
         self.tasa_refresco = pg.time.Clock()
+        self.imagenFondo = pg.image.load("pongapp/images/fondoMenu.jpg")
 
 
     def bucle_pantalla(self):
@@ -138,6 +139,12 @@ class Menu:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
                     game_over = True
+
+            self.pantalla_principal.blit(self.imagenFondo, (0,0))
+
+            pg.display.flip()
+            
+    pg.quit()
 
 class Resultado:
     def __init__(self, resultado):
