@@ -77,19 +77,30 @@ class Partida:
         self.pantalla_principal.blit(tiempo_juego, ((ANCHO//2)-20, 10))
 
     def finalizacion_juego(self):
+
+
         #Finalizacion del juego por puntos
         if self.contadorDerecho == 7:
-            print("El ganador es el Jugador 1")
-            self.game_over = False
+            #print("El ganador es el Jugador 1")
+            #self.game_over = False
+            return "Gana el jugador 1"
         if self.contadorIzquierdo == 7:
-            print("El ganador es el Jugador 2")
-            self.game_over = False
-
+            #print("El ganador es el Jugador 2")
+            #self.game_over = False
+            return "Gana el jugador 2"
+        
         #Finalizacion del juego por tiempo
         self.temporizador = self.temporizador - self.valor_tasa
         if self.temporizador <= 0:
             print("Fin del juego")
             self.game_over = False
+
+        if self.contadorDerecho > self.contadorIzquierdo:
+            return "Gana Jugador 1"
+        elif self.contadorDerecho < self.contadorIzquierdo:
+            return "Gana Jugador 2"
+        else:
+            return "Empate entre Jugador 1 y Jugador 2"
             
     def fijar_fondo(self):
         self.contadorFotograma += 1
