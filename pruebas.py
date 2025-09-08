@@ -32,6 +32,7 @@ nombres_apelidos = nombres(apellidos("Perez Ruiz"))
 print(nombres_apelidos)
 '''
 
+'''
 def mover_mano()->str:
     return "izquierda"
 
@@ -39,3 +40,4 @@ if mover_mano() == "izquierda":
     print("zurdo")
 else:
     print("diestro")
+'''

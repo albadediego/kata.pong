@@ -1,9 +1,9 @@
 from pantallas import Partida, Menu
 
-'''
-juego = Partida()
-juego.bucle_fotograma()
-'''
 
 menu = Menu()
-menu.bucle_pantalla()
+valor = menu.bucle_pantalla() 
+
+if valor == "partida":
+    juego = Partida()
+    juego.bucle_fotograma()
