@@ -129,11 +129,14 @@ class Menu:
         self.tasa_refresco = pg.time.Clock()
         self.imagenFondo = pg.image.load("pongapp/images/fondoMenu.jpg")
         self.fuente = pg.font.Font(FUENTE2, 20)
+        self.sonido = pg.mixer.Sound(SONIDO_MENU)
 
 
     def bucle_pantalla(self):
         game_over = False
         while not game_over:
+            pg.mixer.Sound.play(self.sonido)
+            pg.mixer.Sound.set_volume(self.sonido, 0.01)
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
                     game_over = True
@@ -144,9 +147,10 @@ class Menu:
                 '''
             botones = pg.key.get_pressed()
             if botones[pg.K_RETURN]:
-                #game_over = True
+                pg.mixer.Sound.stop(self.sonido)
                 return "partida"
             elif botones[pg.K_r]:
+                pg.mixer.Sound.stop(self.sonido)
                 return "record"
 
             self.pantalla_principal.blit(self.imagenFondo, (0,0))
