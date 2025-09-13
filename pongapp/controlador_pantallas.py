@@ -15,4 +15,7 @@ class PantallaControlador:
                 resultado = Resultado(resultado_partida)
                 resultado.bucle_pantalla()
         elif valor == "record":
-                self.record.bucle_pantalla()
+            volver_menu = self.record.bucle_pantalla()
+            if volver_menu == "menu":
+                self.menu = Menu()
+                self.menu.bucle_pantalla()

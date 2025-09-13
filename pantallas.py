@@ -201,7 +201,10 @@ class Record:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
                     game_over = True 
-                    
+            botones = pg.key.get_pressed()
+            if botones[pg.K_RETURN]:
+                return "menu"
+            
             self.pantalla_principal.fill(COLOR_BLANCO)
                    
             pg.display.flip()
